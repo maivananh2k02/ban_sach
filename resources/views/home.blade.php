@@ -27,8 +27,8 @@
                 <td>{{$item->author_name}}</td>
                 <td>{{$item->price}}</td>
                 <td>{{$item->desc}}</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
+                <td><a class="btn btn-success" href="{{'show_update/'.$item->id}}">update</a></td>
+                <td><a class="btn btn-danger" href="{{'delete/'.$item->id}}">delete</a></td>
             </tr>
         @endforeach
         </tbody>

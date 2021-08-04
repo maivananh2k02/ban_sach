@@ -19,10 +19,10 @@ class BookController extends Controller
 
     public function showHome()
     {
-        $books=Book::join('categorys','categorys.category_id','=','books.category_id')
-            ->join('authors','authors.author_id','=','books.author_id')
+        $books = Book::join('categorys', 'categorys.category_id', '=', 'books.category_id')
+            ->join('authors', 'authors.author_id', '=', 'books.author_id')
             ->get();
-        return view('home',compact('books'));
+        return view('home', compact('books'));
     }
 
     public function store(Request $request)
@@ -54,6 +54,48 @@ class BookController extends Controller
         $book->price = $request->price;
         $book->desc = $request->desc;
         $book->save();
+        return redirect()->route('home');
+    }
+
+    public function showFormUpdate($id)
+    {
+        $category=Category::where('category_id',$id)->get();
+        $author=Author::where('author_id',$id)->get();
+        $book=Book::where('id',$id)->first();
+//        dd($book->id);
+        return view('update',compact('category','author','book'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $image = $request->file('image');
+        if ($image) {
+            $newImage = $image->getClientOriginalname();
+            $image->move('uploads/', $newImage);
+            Book::where('id', $id)->update([
+                'name' => $request->name,
+                'desc' => $request->desc,
+                'category_id' => $request->category,
+                'author_id' => $request->author,
+                'price' => $request->price,
+                'image' => $newImage
+            ]);
+            return redirect()->route('home');
+        } else {
+            Book::where('id', $id)->update([
+                'name' => $request->name,
+                'desc' => $request->desc,
+                'category_id' => $request->category,
+                'author_id' => $request->author,
+                'price' => $request->price,
+            ]);
+            return redirect()->route('home');
+        }
+    }
+
+    public function delete($id)
+    {
+        Book::where('id',$id)->delete();
         return redirect()->route('home');
     }
 }
