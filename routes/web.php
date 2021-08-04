@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [BookController::class,'showHome'])->name('home');
 Route::get('/create_book',[BookController::class,'create']);
 Route::post('/create_book',[BookController::class,'store'])->name('create_book');

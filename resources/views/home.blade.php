@@ -15,14 +15,18 @@
         </tr>
         </thead>
         <tbody>
+        @php
+            $i=1;
+        @endphp
         @foreach($books as $item)
             <tr>
-                <th scope="row">{{$item++}}</th>
-                <td>Mark</td>
-                <td>Mark</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <th scope="row">{{$i++}}</th>
+                <td>{{$item->name}}</td>
+                <td><img src="uploads/{{$item->image}}" style="width: 100px;height: 100px"></td>
+                <td>{{$item->category_name}}</td>
+                <td>{{$item->author_name}}</td>
+                <td>{{$item->price}}</td>
+                <td>{{$item->desc}}</td>
                 <td>@mdo</td>
                 <td>@mdo</td>
             </tr>
